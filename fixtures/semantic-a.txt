@@ -1,0 +1,1 @@
+SemanticDedup is a GenLayer Intelligent Contract that compares two immutable artifacts and determines whether they are substantially duplicate, distinct, or inconclusive. Validators independently fetch both artifacts, verify SHA-256 hashes, and judge semantic substance rather than superficial wording.

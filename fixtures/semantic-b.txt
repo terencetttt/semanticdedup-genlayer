@@ -1,0 +1,1 @@
+This GenLayer contract checks two fixed artifacts for semantic equivalence. Validators retrieve each artifact themselves, verify the supplied SHA-256 digest, and decide whether the underlying work is materially the same, genuinely different, or too ambiguous to judge. Rewording alone should not make duplicated work distinct.
