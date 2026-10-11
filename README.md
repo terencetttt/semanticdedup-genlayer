@@ -158,3 +158,19 @@ contract\_info()
 
 
 
+
+## Corrected Deployment
+
+Steward-requested correction completed.
+
+The exact-duplicate shortcut now executes only after both artifacts are independently fetched and each caller-supplied SHA-256 digest is verified against the retrieved artifact bytes.
+
+- Network: GenLayer Studio Network
+- Chain ID: 61999
+- Contract: 0x6E03d9a2c1f7287F6A992f4953E005B4cC1D522E
+- Deployment transaction: 0x18a65488489a11ed10d7b5eddeb0f02dba88bac67cc15031612b0b175710707c
+- Deployment status: FINALIZED
+- Consensus: MAJORITY_AGREE
+
+Regression coverage verifies that the exact-duplicate branch occurs only after both verified artifact fetches.
+

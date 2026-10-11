@@ -178,21 +178,6 @@ class SemanticDedup(gl.Contract):
         artifact_a: dict,
         artifact_b: dict,
     ) -> dict:
-        # Exact byte identity is deterministically a duplicate.
-        if artifact_a["sha256"] == artifact_b["sha256"]:
-            return {
-                "verdict": "SUBSTANTIAL_DUPLICATE",
-                "confidence": 100,
-                "overlap_summary": (
-                    "The artifacts have the same SHA-256 digest "
-                    "and therefore identical verified bytes."
-                ),
-                "material_differences": [],
-                "reasoning": (
-                    "Exact byte identity establishes duplication "
-                    "without requiring semantic inference."
-                ),
-            }
 
         prompt = """You are an independent semantic-duplication evaluator.
 
@@ -253,6 +238,24 @@ No markdown.
                 artifact_b["sha256"],
                 "artifact_b",
             )
+
+            # The exact-duplicate shortcut is allowed only after validators
+            # independently fetch both artifacts and verify each caller-supplied
+            # SHA-256 digest against the actual artifact bytes.
+            if artifact_a["sha256"] == artifact_b["sha256"]:
+                return {
+                    "verdict": "SUBSTANTIAL_DUPLICATE",
+                    "confidence": 100,
+                    "overlap_summary": (
+                        "Both artifacts were independently fetched, "
+                        "SHA-256 verified, and contain identical bytes."
+                    ),
+                    "material_differences": [],
+                    "reasoning": (
+                        "Exact verified byte identity establishes duplication "
+                        "without requiring semantic inference."
+                    ),
+                }
 
             try:
                 a_text = a_bytes.decode("utf-8")
@@ -611,3 +614,4 @@ No markdown.
             return False
         except Exception:
             return False
+
